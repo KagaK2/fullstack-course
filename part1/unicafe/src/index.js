@@ -17,12 +17,24 @@ const App = () => {
           <button onClick={() => setBad(bad + 1)}>Bad</button>
         </div>
       </div>
-      <div>
-        <h1>Statistics</h1>
-        <p>Good {good}</p>
-        <p>Neutral {neutral}</p>
-        <p>Bad {bad}</p>
-      </div>
+      <Statistics good={good} neutral={neutral} bad={bad} />
+    </div>
+  );
+};
+
+const Statistics = props => {
+  return (
+    <div>
+      <h1>Statistics</h1>
+      {props.good + props.neutral + props.bad > 0 ? (
+        <div>
+          <p> Good {props.good}</p>
+          <p>Neutral {props.neutral}</p>
+          <p>Bad {props.bad}</p>
+        </div>
+      ) : (
+        "No feedback given"
+      )}
     </div>
   );
 };
