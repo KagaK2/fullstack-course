@@ -3,12 +3,12 @@ import React from "react";
 const Total = props => {
   return (
     <React.Fragment>
-      <p>
+      <h4>
         Number of exercises:
         {props.parts.reduce((accumulator, currentPart) => {
           return accumulator + currentPart.exercises;
         }, 0)}
-      </p>
+      </h4>
     </React.Fragment>
   );
 };
