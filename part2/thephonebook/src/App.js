@@ -9,7 +9,12 @@ const App = () => {
   };
   const handleFormSubmit = e => {
     e.preventDefault();
-    setPersons([...persons, { name: newName }]);
+    const filteredArray = persons.filter(person => person.name === newName);
+    if (filteredArray.length === 0) {
+      setPersons([...persons, { name: newName }]);
+    } else {
+      window.alert(`${newName} is already added to phonebook`);
+    }
     setNewName("");
   };
   return (
