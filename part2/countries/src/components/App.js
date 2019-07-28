@@ -6,6 +6,7 @@ const App = props => {
   const [searchResult, setSearchResult] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [viewedCountry, setViewedCountry] = useState(null);
+  const [currentWeather, setCurrentWeather] = useState(null);
 
   useEffect(() => {
     axios.get("https://restcountries.eu/rest/v2/all").then(response => {
@@ -20,7 +21,21 @@ const App = props => {
     setSearchResult(newSearchResult);
   }, [countries, searchTerm]);
 
-  const renderOneCountry = currentCountry => {
+  useEffect(() => {
+    if (viewedCountry != null) {
+      axios
+        .get(
+          `http://api.apixu.com/v1/current.json?key=045b973c62e14c52a4c143943192807&q=${
+            viewedCountry.name
+          }`
+        )
+        .then(response => {
+          setCurrentWeather(response.data);
+        });
+    }
+  }, [viewedCountry]);
+
+  const renderOneCountry = (currentCountry, currentWeather) => {
     let languages = currentCountry.languages.map(language => (
       <li key={language.name}>{language.name}</li>
     ));
@@ -37,6 +52,17 @@ const App = props => {
           height="128"
           width="128"
         />
+        <div>
+          <h2>Weather in {currentWeather.location.name}</h2>
+          <p>
+            <b>temperature:</b> {currentWeather.current.temp_c} Celsius
+          </p>
+          <img src={currentWeather.current.condition.icon} alt="" />
+          <p>
+            <b>wind:</b> {currentWeather.current.wind_kph} kph direction{" "}
+            {currentWeather.current.wind_dir}
+          </p>
+        </div>
       </div>
     );
   };
@@ -77,7 +103,11 @@ const App = props => {
         value={searchTerm}
       />
       <div>{renderCountries(searchResult)}</div>
-      <div>{viewedCountry ? renderOneCountry(viewedCountry) : null}</div>
+      <div>
+        {viewedCountry && currentWeather
+          ? renderOneCountry(viewedCountry, currentWeather)
+          : null}
+      </div>
     </div>
   );
 };
