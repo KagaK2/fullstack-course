@@ -33,6 +33,15 @@ const App = () => {
     setNewNumber("");
   };
 
+  const deletePerson = id => {
+    if (window.confirm("Do you really want to delete this entry?")) {
+      phonebookService.erase(id).then(response => {
+        const filteredArray = persons.filter(person => person.id != id);
+        setPersons(filteredArray);
+      });
+    }
+  };
+
   return (
     <div>
       {persons.length > 0 ? (
@@ -47,7 +56,7 @@ const App = () => {
             onFormSubmit={onFormSubmit}
           />
           <h2>Numbers</h2>
-          <Persons persons={persons} filter={filter} />
+          <Persons persons={persons} filter={filter} onClick={deletePerson} />
         </div>
       ) : (
         <div>Loading</div>

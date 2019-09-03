@@ -9,7 +9,9 @@ const Persons = props => {
           person.name.toLowerCase().includes(props.filter.toLowerCase())
         )
         .map(person => {
-          return <Person key={person.name} person={person} />;
+          return (
+            <Person key={person.name} person={person} onClick={props.onClick} />
+          );
         })}
     </div>
   );

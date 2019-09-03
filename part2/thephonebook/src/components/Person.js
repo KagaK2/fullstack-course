@@ -1,7 +1,18 @@
 import React from "react";
 
 const Person = props => {
-  return <div>{`${props.person.name} ${props.person.number}`}</div>;
+  return (
+    <div>
+      <div>{`${props.person.name} ${props.person.number}`}</div>
+      <button
+        onClick={() => {
+          props.onClick(props.person.id);
+        }}
+      >
+        delete
+      </button>
+    </div>
+  );
 };
 
 export default Person;
