@@ -27,7 +27,17 @@ const App = () => {
           setPersons([...persons, response.data]);
         });
     } else {
-      window.alert(`${newName} is already added to phonebook`);
+      phonebookService
+        .update(filteredArray[0].id, { name: newName, number: newNumber })
+        .then(response => {
+          let newArray = persons.filter(
+            person => person.id != response.data.id
+          );
+          setPersons([...newArray, response.data]);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
     setNewName("");
     setNewNumber("");
