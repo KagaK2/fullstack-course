@@ -17,7 +17,15 @@ const App = () => {
   const onFormSubmit = () => {
     const filteredArray = persons.filter(person => person.name === newName);
     if (filteredArray.length === 0) {
-      setPersons([...persons, { name: newName, number: newNumber }]);
+      //setPersons([...persons, { name: newName, number: newNumber }]);
+      axios
+        .post("http://localhost:3001/persons", {
+          name: newName,
+          number: newNumber
+        })
+        .then(response => {
+          setPersons([...persons, response.data]);
+        });
     } else {
       window.alert(`${newName} is already added to phonebook`);
     }
