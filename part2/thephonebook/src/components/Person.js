@@ -6,7 +6,7 @@ const Person = props => {
       <div>{`${props.person.name} ${props.person.number}`}</div>
       <button
         onClick={() => {
-          props.onClick(props.person.id);
+          props.onClick(props.person.id, props.person.name);
         }}
       >
         delete
